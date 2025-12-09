@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+# Load pipeline model
 model = joblib.load("rf_model_compressed.pkl")
 
-st.title("Prediksi Skala Layoff Perusahaan ")
-st.markdown("Masukkan data perusahaan di bawah ini untuk memprediksi apakah PHK berskala kecil, sedang, atau besar.")
+st.title("Prediksi Skala Layoff Perusahaan")
+st.markdown("Masukkan data perusahaan di bawah ini untuk memprediksi tingkat keparahan PHK.")
 
-# Input user
 industry = st.selectbox("Industry", [
     "Technology", "Finance", "Healthcare", "Consumer", "HR", "Logistics", "Unknown"
 ])
@@ -20,8 +20,8 @@ country = st.text_input("Country", "United States")
 location = st.text_input("Location", "SF Bay Area")
 source = st.text_input("Source", "Internal Memo")
 
-funds_raised = st.number_input("Funds Raised (juta USD)", min_value=0.0, step=10.0)
-total_laid_off = st.number_input("Total Karyawan di-PHK", min_value=0, step=1)
+funds_raised = st.number_input("Funds Raised (USD)", min_value=0.0, step=10.0)
+year = st.number_input("Year", min_value=2020, max_value=2024, step=1)   # <-- tambahin ini
 
 if st.button("Prediksi Skala Layoff"):
     input_data = pd.DataFrame({
@@ -35,9 +35,5 @@ if st.button("Prediksi Skala Layoff"):
     })
 
     input_data["year"] = input_data["year"].astype(int)
-
     prediction = model.predict(input_data)[0]
     st.success(f"Hasil Prediksi: **{prediction}**")
-
-
-
