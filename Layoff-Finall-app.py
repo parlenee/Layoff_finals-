@@ -23,20 +23,21 @@ source = st.text_input("Source", "Internal Memo")
 funds_raised = st.number_input("Funds Raised (juta USD)", min_value=0.0, step=10.0)
 total_laid_off = st.number_input("Total Karyawan di-PHK", min_value=0, step=1)
 
-# Tombol Prediksi
 if st.button("Prediksi Skala Layoff"):
     input_data = pd.DataFrame({
         "industry": [industry],
-        "stage": [stage],
         "country": [country],
+        "stage": [stage],
         "location": [location],
         "source": [source],
         "funds_raised": [funds_raised],
-        "total_laid_off": [total_laid_off]
+        "year": [year]
     })
 
-    prediction = model.predict(input_data)[0]
+    input_data["year"] = input_data["year"].astype(int)
 
+    prediction = model.predict(input_data)[0]
     st.success(f"Hasil Prediksi: **{prediction}**")
+
 
 
