@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-model = joblib.load("model/rf_model_compressed.pkl")
+model = joblib.load("rf_model_compressed.pkl")
 
 st.title("Prediksi Skala Layoff Perusahaan ")
 st.markdown("Masukkan data perusahaan di bawah ini untuk memprediksi apakah PHK berskala kecil, sedang, atau besar.")
@@ -38,4 +38,5 @@ if st.button("Prediksi Skala Layoff"):
     prediction = model.predict(input_data)[0]
 
     st.success(f"Hasil Prediksi: **{prediction}**")
+
 
